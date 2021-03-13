@@ -1,12 +1,11 @@
 #include <string>
+#include <iostream>
+
+
+#include "user.entity.h"
 
 using namespace std;
 
-class User {
-  private:
-    int id;
-    string firstName;
-    string lastName;
-    string country;
-    string registered_at;
-};
+string User::serialize () {
+  return "user serialized";
+}
