@@ -13,20 +13,22 @@ class Serializable {
 
 class Entity : public Serializable {};
 
-template<typename T>
-class DBTable {
-  private:
-    string name;
-    string *columns;
-    T* dataList;
-  public:
-    DBTable(T entity) {};
+// template<typename T>
+// class DBTable {
+//   private:
+//     string name;
+//     string *columns;
+//     T* dataList;
+//   public:
+//     DBTable(T entity) {};
 
-    T* selectAll();
-    T find ();
-    bool deleteOne (T item);
-};
+//     T* selectAll();
+//     T find ();
+//     bool deleteOne (T item);
+// };
 
+// map<string, DBTable<Entity>> selectDb(string name);
+// DBTable<Entity> selectTable(map<string, DBTable<Entity>> tables);
 
 class DBDriver {
   private:
@@ -34,6 +36,10 @@ class DBDriver {
   public:
     DBDriver(string ID): ID(ID) {};
 
-    map<string, DBTable<Entity>> selectDb(string name);
-    DBTable<Entity> selectTable (map<string, DBTable<Entity>> tables);
+    template<typename DB>
+    DB selectDb(string name);
+    template<typename DB, typename T>
+    T selectTable (DB tables);
+
+    virtual void connect(Config c);
 };
