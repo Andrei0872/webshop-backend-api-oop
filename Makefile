@@ -6,7 +6,7 @@ run: build
 	./main
 
 build:
-	g++ -pthread ./main.cpp -o main
+	g++ -pthread *.cpp -o main
 
 clean:
 	rm main
