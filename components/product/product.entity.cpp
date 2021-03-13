@@ -1,12 +1,7 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+#include "../user/user.entity.h"
+#include "product.entity.h"
 
-class Product {
-  private:
-    int id;
-    int price;
-    string name;
-    string created_at;
-};
+using namespace std;
