@@ -14,5 +14,26 @@ class User : public Entity {
     string registered_at;
 
   public:
-    string serialize();
+    User () {
+      firstName = "Andrei";
+    }
+
+    string serialize() {
+      return firstName;
+    }
+};
+
+class UserTable : public DBTable {
+  private:
+    vector<User> users;
+  public:
+    UserTable(string name): DBTable(name) {};
+
+    vector<User> selectAll () {
+      return users;
+    }
+
+    void insertOne (User user) {
+      users.push_back(user);
+    }
 };
