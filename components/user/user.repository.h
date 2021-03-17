@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "../../utils/types.h"
+#include "user.entity.h"
 
 #include <vector>
 
@@ -12,13 +13,15 @@ class UserRepository : public Repository {
   
   public:
     UserRepository(): Repository() {
+      cout << "USER REPO \n";
+      
       userTable = new UserTable("user");
       
       setTable("user", userTable);
 
-      User u;
+      // User u;
 
-      userTable->insertOne(u);
+      // userTable->insertOne(u);
 
       // auto r = userTable->selectAll().size();
 
