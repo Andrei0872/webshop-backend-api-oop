@@ -3,15 +3,10 @@
 #include "./utils/types.h"
 #include "./components/product/product.entity.h"
 #include "./db/drivers/memory.driver.h"
-#include "./components/user/user.entity.h"
-#include "./components/user/user.repository.h"
+
+#include "./components/user/user.controller.h"
 
 using namespace std;
-
-// TODO: 
-// initiate server
-
-class Foo {};
 
 int main () {
   MemoryDriver* memoryDriver = new MemoryDriver();
@@ -23,7 +18,5 @@ int main () {
   // which does not require any async actions
   Database::getInstance().connect();
 
-  UserRepository u;
-
-  cout << u.selectAll().size();
+  UserController userController;
 }
