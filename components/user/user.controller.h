@@ -11,5 +11,15 @@ class UserController {
       cout << "USER CONTROLLER INIT \n";
     };
 
-    void getAll () {};
+    vector<User> getAll () {
+      return userService.getAll();
+    }
+
+    User getById (int userId) {
+      return userService.getById(userId);
+    }
+
+    void insertUser () {
+      // TODO: insert data from terminal
+    }
 };
