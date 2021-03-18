@@ -12,4 +12,4 @@ class Serializable {
     virtual string serialize() = 0;
 };
 
-class Entity {};
+class Entity : public Serializable {};
