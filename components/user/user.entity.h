@@ -11,11 +11,13 @@ class User : public Entity {
     string firstName;
     string lastName;
     string country;
-    string registered_at;
 
   public:
-    User () {
-      firstName = "Andrei";
+    User (int id, string fName, string lName, string country)
+      : id(id), firstName(fName), lastName(lName), country(country) {}
+
+    int getId () const {
+      return id;
     }
 
     string serialize() {

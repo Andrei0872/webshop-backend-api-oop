@@ -5,7 +5,7 @@
 ## Project's state
 
 * [ ] user
-  * [ ] entity
+  * [X] entity
   * [ ] controller
   * [ ] service
   * [ ] repository
@@ -45,7 +45,9 @@
     * [ ] mysql (not going to be used, just for demo purposes)
     * [ ] memory
   * [ ] include drivers
-* [ ] create the actual server
+* [ ] create a tiny CLI app instead of a server
+* [ ] add a `Logger` class
+* [ ] add teardown logic in destructors
 
 ## Requirements
 
