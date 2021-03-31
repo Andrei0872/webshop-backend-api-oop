@@ -48,6 +48,10 @@
 * [ ] create a tiny CLI app instead of a server
 * [ ] add a `Logger` class
 * [ ] add teardown logic in destructors
+* [ ] make sure to use `delete` where needed
+* [ ] constructor de copiere, operator=, destructor, operator<<.
+* [ ] CLI class
+  * [ ] create menu for `admin`
 
 ## Requirements
 
