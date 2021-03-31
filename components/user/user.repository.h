@@ -31,4 +31,10 @@ class UserRepository : public Repository {
     vector<User> selectAll () {
       return userTable->selectAll();
     };
+
+    bool insertUser (User u) {
+      userTable->insertOne(u);
+
+      return true;
+    }
 };

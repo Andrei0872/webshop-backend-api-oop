@@ -4,9 +4,12 @@
 
 using namespace std;
 
+// TODO: keep track of user ids
+
 class UserService {
   private:
     UserRepository userRepo;
+    int crtUserId = 0;
   
   public:
     UserService() : userRepo() {
@@ -27,5 +30,17 @@ class UserService {
       return *find_if(
           users.begin(), users.end(),
           [&userId](const User &u) { return u.getId() == userId; });
+    }
+
+    bool insertUser (CliInput rawUser) {
+      User newUser(
+        // stoi(rawUser.at("id")),
+        crtUserId++,
+        rawUser.at("fName"),
+        rawUser.at("lName"),
+        rawUser.at("country")
+      );
+      
+      return userRepo.insertUser(newUser);
     }
 };

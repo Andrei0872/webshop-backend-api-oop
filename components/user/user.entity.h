@@ -5,7 +5,7 @@
 
 using namespace std;
 
-class User : public Entity {
+class User : virtual public Entity {
   private:
     int id;
     string firstName;
@@ -22,6 +22,17 @@ class User : public Entity {
 
     string serialize() {
       return firstName;
+    }
+
+    // Used when asking for values in CLI
+    virtual vector<string> getProperties () {
+      vector<string> properties;
+
+      properties.push_back("firstName");
+      properties.push_back("lastName");
+      properties.push_back("country");
+
+      return properties;
     }
 };
 

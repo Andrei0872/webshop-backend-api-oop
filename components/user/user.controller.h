@@ -1,4 +1,5 @@
 #include "user.service.h"
+#include <map>
 
 using namespace std;
 
@@ -19,7 +20,8 @@ class UserController {
       return userService.getById(userId);
     }
 
-    void insertUser () {
+    void insertUser (CliInput rawUser) {
       // TODO: insert data from terminal
+      bool ok = userService.insertUser(rawUser);
     }
 };
