@@ -16,7 +16,27 @@ class UserService {
       cout << "USER SERVICE INIT\n";
     };
 
-    vector<User> getAll () {
+    template <
+      typename Serialize,
+      typename T = enable_if<is_same<Serialize, bool>{}>
+    >
+    vector<string> getAll (Serialize) {
+      auto users = userRepo.selectAll();
+      vector<string> serializedUsers;
+
+      serializedUsers.resize(users.size());
+
+      transform(
+        users.begin(), 
+        users.end(), 
+        serializedUsers.begin(),
+        [](User &u) -> string { return u.serialize(); }
+      );
+
+      return serializedUsers;
+    }
+
+    vector<User> getAll() {
       return userRepo.selectAll();
     }
 
