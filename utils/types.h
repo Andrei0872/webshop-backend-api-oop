@@ -15,7 +15,7 @@ class Serializable {
 
 class Entity : public Serializable {
   public:
-    virtual vector<string> getProperties ();
+    virtual vector<string> getProperties () = 0;
 };
 
 enum class Values {

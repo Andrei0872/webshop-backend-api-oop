@@ -6,6 +6,8 @@
 
 #include "./components/user/user.controller.h"
 
+// #include "./cli/cli.h"
+
 using namespace std;
 
 int main () {
@@ -19,4 +21,26 @@ int main () {
   Database::getInstance().connect();
 
   UserController userController;
+
+  CliInput rawUser;
+  rawUser.insert({ "fName", "Andrei" });
+  rawUser.insert({ "lName", "Gatej" });
+  rawUser.insert({ "country", "RO" });
+  userController.insertUser(rawUser);
+
+  rawUser.clear();
+
+  rawUser.insert({"fName", "John"});
+  rawUser.insert({"lName", "Doe"});
+  rawUser.insert({"country", "GE"});
+  userController.insertUser(rawUser);
+
+  rawUser.clear();
+
+  rawUser.insert({"fName", "Jane"});
+  rawUser.insert({"lName", "Doe"});
+  rawUser.insert({"country", "BG"});
+  userController.insertUser(rawUser);
+
+  userController.getAll();
 }

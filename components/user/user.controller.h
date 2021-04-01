@@ -1,5 +1,6 @@
 #include "user.service.h"
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -12,8 +13,16 @@ class UserController {
       cout << "USER CONTROLLER INIT \n";
     };
 
-    vector<User> getAll () {
-      return userService.getAll();
+    void operator<< (const vector<string>& serializedUsers) {
+      for_each(serializedUsers.begin(), serializedUsers.end(), [](string u) { cout << u << "\n\n"; });
+      
+      return;
+    }
+
+    void getAll () {
+      auto users = userService.getAll(true);
+
+      *this << users;
     }
 
     User getById (int userId) {
@@ -21,7 +30,13 @@ class UserController {
     }
 
     void insertUser (CliInput rawUser) {
-      // TODO: insert data from terminal
+        // TODO: throw & catch error
       bool ok = userService.insertUser(rawUser);
+
+      if (!ok) {
+        return;
+      }
+
+      cout << "The user has been successfully added. \n";
     }
 };
