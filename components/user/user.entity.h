@@ -25,6 +25,12 @@ class User : virtual public Entity {
     User (int id, string fName, string lName, string country)
       : id(id), firstName(fName), lastName(lName), country(country) {}
 
+    friend ostream& operator << (ostream& os, User u) {
+      os << u.serialize();
+
+      return os;
+    }
+
     virtual int getId () {
       return id;
     }
