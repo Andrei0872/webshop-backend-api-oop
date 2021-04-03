@@ -29,4 +29,10 @@ class UserRepository : public Repository {
 
       return true;
     }
+
+    bool updateUser (User u) {
+      userTable->updateOne(u);
+
+      return true;
+    }
 };

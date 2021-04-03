@@ -39,4 +39,13 @@ class UserController {
 
       cout << "The user has been successfully added. \n";
     }
+
+    void updateUser (int userId, CliInput newUser) {
+      auto updatedUser = userService.updateUser(userId, newUser);
+
+      cout << "\nUPDATED USER:";
+      cout << updatedUser;
+    }
+
+    void deleteUser (int userId) {}
 };

@@ -10,7 +10,18 @@ class UserService {
   private:
     UserRepository userRepo;
     int crtUserId = 0;
-  
+
+    User createUser (CliInput rawUser, int id = -1) {
+      User newUser(
+        id == - 1 ? ++crtUserId : id,
+        rawUser.at("firstName"),
+        rawUser.at("lastName"),
+        rawUser.at("country")
+      );
+
+      return newUser;
+    }
+
   public:
     UserService() : userRepo() {
       cout << "USER SERVICE INIT\n";
@@ -52,14 +63,29 @@ class UserService {
           [&userId](User &u) { return u.getId() == userId; });
     }
 
-    bool insertUser (CliInput rawUser) {      
-      User newUser(
-        ++crtUserId,
-        rawUser.at("fName"),
-        rawUser.at("lName"),
-        rawUser.at("country")
-      );
+    // TODO: maybe return User
+    bool insertUser (CliInput rawUser) {
+      return userRepo.insertUser(createUser(rawUser));
+    }
 
-      return userRepo.insertUser(newUser);
+    User updateUser (int userId, CliInput rawUser) {
+      auto crtUser = getById(userId);
+      auto userProps = crtUser.getProperties();
+
+      // Creating a new user by mergin what's new with what's already there
+      for (size_t i = 0; i < userProps.size(); i++) {
+        auto prop = userProps[i];
+
+        if (rawUser.find(prop) == rawUser.end()) {
+          auto existingVal = crtUser.getPropertyValue(prop);
+          rawUser.insert({ prop, existingVal });
+        }
+      }
+
+      auto newUser = createUser(rawUser, userId);
+
+      userRepo.updateUser(newUser);
+      
+      return newUser;
     }
 };

@@ -23,24 +23,33 @@ int main () {
   UserController userController;
 
   CliInput rawUser;
-  rawUser.insert({ "fName", "Andrei" });
-  rawUser.insert({ "lName", "Gatej" });
+  rawUser.insert({ "firstName", "Andrei" });
+  rawUser.insert({ "lastName", "Gatej" });
   rawUser.insert({ "country", "RO" });
   userController.insertUser(rawUser);
 
   rawUser.clear();
 
-  rawUser.insert({"fName", "John"});
-  rawUser.insert({"lName", "Doe"});
+  rawUser.insert({"firstName", "John"});
+  rawUser.insert({"lastName", "Doe"});
   rawUser.insert({"country", "GE"});
   userController.insertUser(rawUser);
 
   rawUser.clear();
 
-  rawUser.insert({"fName", "Jane"});
-  rawUser.insert({"lName", "Doe"});
+  rawUser.insert({"firstName", "Jane"});
+  rawUser.insert({"lastName", "Doe"});
   rawUser.insert({"country", "BG"});
   userController.insertUser(rawUser);
+
+  userController.getAll();
+
+  // auto u = userController.getById(1);
+  // cout << u;
+
+  rawUser.clear();
+  rawUser.insert({ "firstName", "ANDREI" });
+  userController.updateUser(1, rawUser);
 
   userController.getAll();
 }

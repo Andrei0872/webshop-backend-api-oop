@@ -2,6 +2,7 @@
 
 #include <string>
 #include <functional>
+#include <algorithm>
 #include "../../utils/types.h"
 
 using namespace std;
@@ -53,5 +54,12 @@ class UserTable : public DBTable {
 
     void insertOne (User user) {
       users.push_back(user);
+    }
+
+    void updateOne (User newUser) {
+      for (size_t i = 0; i < users.size(); i++) {
+        auto crtUser = users[i];
+        users[i] = crtUser.getId() == newUser.getId() ? newUser : crtUser;
+      }
     }
 };
