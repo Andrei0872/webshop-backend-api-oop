@@ -6,6 +6,8 @@
 #include <vector>
 #include <any>
 #include <functional>
+#include <algorithm>
+#include <iterator>
 
 using namespace std;
 
@@ -35,6 +37,21 @@ class Entity : public Serializable {
       }
 
       return res;
+    }
+
+    string getPropertyValue (string prop) {
+      auto props = getProperties();
+      auto it = find_if(props.begin(), props.end(), [&, prop](string p) { return p == prop; });
+
+      // TODO: throw error
+      if (it == props.end()) {
+        return "";
+      }
+
+      auto propsRefs = getPropsAsRefs();
+      int idx = distance(props.begin(), it);
+
+      return propsRefs[idx].get();
     }
 };
 
