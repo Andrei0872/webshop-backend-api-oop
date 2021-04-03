@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <functional>
 #include "../../utils/types.h"
 
 using namespace std;
@@ -12,26 +13,24 @@ class User : virtual public Entity {
     string lastName;
     string country;
 
+    vector<string> properties{"firstName", "lastName", "country"};
+
+  protected:
+    virtual vector<reference_wrapper<string>> getPropsAsRefs () {
+      vector<reference_wrapper<string>> propsRefs{firstName, lastName, country};
+      return propsRefs;
+    }
+
   public:
     User (int id, string fName, string lName, string country)
       : id(id), firstName(fName), lastName(lName), country(country) {}
 
-    int getId () const {
+    virtual int getId () {
       return id;
-    }
-
-    string serialize() {
-      return firstName;
     }
 
     // Used when asking for values in CLI
     virtual vector<string> getProperties () {
-      vector<string> properties;
-
-      properties.push_back("firstName");
-      properties.push_back("lastName");
-      properties.push_back("country");
-
       return properties;
     }
 };

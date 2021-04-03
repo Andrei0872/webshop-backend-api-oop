@@ -18,14 +18,6 @@ class UserRepository : public Repository {
       userTable = new UserTable("user");
       
       setTable("user", userTable);
-
-      // User u;
-
-      // userTable->insertOne(u);
-
-      // auto r = userTable->selectAll().size();
-
-      // cout << r;
     };
   
     vector<User> selectAll () {
