@@ -47,5 +47,19 @@ class UserController {
       cout << updatedUser;
     }
 
-    void deleteUser (int userId) {}
+    void deleteUser (int userId) {
+      bool successfullyDeleted = userService.deleteUser(userId);
+
+      string message;
+
+      if (successfullyDeleted) {
+        message = "Successfully deleted ";
+      } else {
+        message = "There was a problem deleting the ";
+      }
+
+      message += "user with id=" + to_string(userId);
+
+      cout << message << '\n';
+    }
 };

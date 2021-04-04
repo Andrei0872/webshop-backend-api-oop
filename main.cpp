@@ -42,14 +42,19 @@ int main () {
   rawUser.insert({"country", "BG"});
   userController.insertUser(rawUser);
 
-  userController.getAll();
+  // userController.getAll();
 
   // auto u = userController.getById(1);
   // cout << u;
 
-  rawUser.clear();
-  rawUser.insert({ "firstName", "ANDREI" });
-  userController.updateUser(1, rawUser);
+  // rawUser.clear();
+  // rawUser.insert({ "firstName", "ANDREI" });
+  // userController.updateUser(1, rawUser);
 
+  userController.deleteUser(1);
+  userController.deleteUser(3);
+  userController.deleteUser(4);
+  userController.deleteUser(2);
+  userController.deleteUser(100);
   userController.getAll();
 }

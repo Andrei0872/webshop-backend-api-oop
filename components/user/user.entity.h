@@ -62,4 +62,27 @@ class UserTable : public DBTable {
         users[i] = crtUser.getId() == newUser.getId() ? newUser : crtUser;
       }
     }
+
+    void deleteOne (int userId) {
+      if (!users.size()) {
+        throw string("There are no more users - nothing to delete");
+      }
+      
+      auto it = remove_if(
+        users.begin(),
+        users.end(),
+        [&, userId](User u) {
+          return u.getId() == userId;
+        }
+      );
+
+      if (it == users.end()) {
+        string errorMsg = "The user with id=";
+        errorMsg += to_string(userId) + "does not exist!";
+
+        throw errorMsg;
+      }
+
+      users.erase(it, users.end());
+    }
 };

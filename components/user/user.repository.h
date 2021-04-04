@@ -35,4 +35,15 @@ class UserRepository : public Repository {
 
       return true;
     }
+
+    bool deleteUser (int userId) {
+      try {
+        userTable->deleteOne(userId);
+      } catch (string msg) {
+        cout << msg << '\n';
+        return false;
+      }
+
+      return true;
+    }
 };

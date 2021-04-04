@@ -88,4 +88,8 @@ class UserService {
       
       return newUser;
     }
+
+    bool deleteUser (int userId) {
+      return userRepo.deleteUser(userId);
+    }
 };
