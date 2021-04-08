@@ -16,6 +16,16 @@ class User : virtual public Entity {
 
     vector<string> properties{"firstName", "lastName", "country"};
 
+    void assignNewUser (const User& newUser) {
+      auto crtUserPropsRefs = getProperties();
+
+      for (auto i = 0; i < crtUserPropsRefs.size(); i++) {
+        setPropertyValue(crtUserPropsRefs[i], newUser.getPropertyValue(crtUserPropsRefs[i]));
+      }
+
+      setId(newUser.getId());
+    }
+
   protected:
     virtual vector<reference_wrapper<const string>> getPropsAsRefs () const {
       vector<reference_wrapper<const string>> propsRefs{firstName, lastName, country};
@@ -33,13 +43,13 @@ class User : virtual public Entity {
       : id(id), firstName(fName), lastName(lName), country(country) {}
     
     User (const User& newUser) {
-      auto crtUserPropsRefs = getProperties();
+      assignNewUser(newUser);
+    }
 
-      for (auto i = 0; i < crtUserPropsRefs.size(); i++) {
-        setPropertyValue(crtUserPropsRefs[i], newUser.getPropertyValue(crtUserPropsRefs[i]));
-      }
+    User& operator= (const User& rUser) {
+      assignNewUser(rUser);
 
-      setId(newUser.getId());
+      return *this;
     }
 
     friend ostream& operator << (ostream& os, const User& u) {
