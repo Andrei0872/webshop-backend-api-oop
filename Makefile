@@ -6,7 +6,8 @@ run: build
 	./main
 
 build:
-	g++ -pthread *.cpp -o main
+	# -Wall -Wextra -pedantic
+	g++ -g -Wall -Wextra -pedantic -pthread *.cpp -o main
 
 clean:
 	rm main
