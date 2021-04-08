@@ -35,6 +35,7 @@ class DBDriver {
 
   public:
     DBDriver(string ID = ""): ID(ID) {};
+    virtual ~DBDriver () { }
 
     TablesMap selectDb(string name) {
       return databases.at(name);

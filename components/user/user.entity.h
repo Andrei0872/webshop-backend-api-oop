@@ -19,7 +19,7 @@ class User : virtual public Entity {
     void assignNewUser (const User& newUser) {
       auto crtUserPropsRefs = getProperties();
 
-      for (auto i = 0; i < crtUserPropsRefs.size(); i++) {
+      for (size_t i = 0; i < crtUserPropsRefs.size(); i++) {
         setPropertyValue(crtUserPropsRefs[i], newUser.getPropertyValue(crtUserPropsRefs[i]));
       }
 

@@ -19,7 +19,11 @@ class UserRepository : public Repository {
       
       setTable("user", userTable);
     };
-  
+
+    ~UserRepository() {
+      delete userTable;
+    }
+
     vector<User> selectAll () {
       return userTable->selectAll();
     };

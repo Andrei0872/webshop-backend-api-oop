@@ -57,4 +57,6 @@ int main () {
   // userController.deleteUser(2);
   // userController.deleteUser(100);
   userController.getAll();
+
+  delete memoryDriver;
 }
