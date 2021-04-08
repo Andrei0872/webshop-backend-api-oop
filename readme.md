@@ -73,6 +73,12 @@ cp .env.example .env
 env $(cat .env) make
 ```
 
+Additionally, if you want to inspect `valgrind`'s outputs, you can use:
+
+```bash
+env $(cat .env) valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./main &> valgrind.txt
+```
+
 ---
 
 ## App overview
