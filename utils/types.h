@@ -13,18 +13,43 @@ using namespace std;
 
 class Serializable {
   public:
-    virtual string serialize() = 0;
+    virtual string serialize() const {
+      throw "Must be implemented";
+      
+      return "";
+    };
 };
 
 class Entity : public Serializable {
   protected:
-    virtual vector<reference_wrapper<string>> getPropsAsRefs() = 0;
+    virtual vector<reference_wrapper<const string>> getPropsAsRefs() const {
+      // TODO: create a custom exception
+      throw "Must be implemented";
+      
+      vector<reference_wrapper<const string>> temp;
+      
+      return temp;
+    };
+
+    virtual vector<reference_wrapper<string>> getMutablePropsAsRefs () = 0;
 
   public:
-    virtual vector<string> getProperties () = 0;
-    virtual int getId () = 0;
+    virtual vector<string> getProperties () const {
+      // TODO: create a custom exception
+      throw "Must be implemented";
 
-    string serialize() {
+      vector<string> temp;
+
+      return temp;
+    };
+    virtual int getId () const {
+      // TODO: create a custom exception
+      throw "Must be implemented";
+
+      return 0;
+    };
+
+    string serialize() const {
       auto propsRefs = getPropsAsRefs();
       auto properties = getProperties();
 
@@ -39,7 +64,7 @@ class Entity : public Serializable {
       return res;
     }
 
-    string getPropertyValue (string prop) {
+    string getPropertyValue (string prop) const {
       auto props = getProperties();
       auto it = find_if(props.begin(), props.end(), [&, prop](string p) { return p == prop; });
 
@@ -52,6 +77,21 @@ class Entity : public Serializable {
       int idx = distance(props.begin(), it);
 
       return propsRefs[idx].get();
+    }
+
+    void setPropertyValue (const string& prop, const string& val) {
+      auto props = getProperties();
+      auto it = find_if(props.begin(), props.end(), [&, prop](string p) { return p == prop; });
+
+      // TODO: throw error
+      if (it == props.end()) {
+        throw "Property not found";
+      }
+
+      auto propsRefs = getMutablePropsAsRefs();
+      int idx = distance(props.begin(), it);
+
+      propsRefs[idx].get() = val;
     }
 };
 

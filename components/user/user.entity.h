@@ -17,7 +17,13 @@ class User : virtual public Entity {
     vector<string> properties{"firstName", "lastName", "country"};
 
   protected:
-    virtual vector<reference_wrapper<string>> getPropsAsRefs () {
+    virtual vector<reference_wrapper<const string>> getPropsAsRefs () const {
+      vector<reference_wrapper<const string>> propsRefs{firstName, lastName, country};
+
+      return propsRefs;
+    }
+
+    virtual vector<reference_wrapper<string>> getMutablePropsAsRefs () {
       vector<reference_wrapper<string>> propsRefs{firstName, lastName, country};
       return propsRefs;
     }
@@ -25,19 +31,37 @@ class User : virtual public Entity {
   public:
     User (int id, string fName, string lName, string country)
       : id(id), firstName(fName), lastName(lName), country(country) {}
+    
+    User (const User& newUser) {
+      auto crtUserPropsRefs = getProperties();
 
-    friend ostream& operator << (ostream& os, User u) {
+      for (auto i = 0; i < crtUserPropsRefs.size(); i++) {
+        setPropertyValue(crtUserPropsRefs[i], newUser.getPropertyValue(crtUserPropsRefs[i]));
+      }
+
+      setId(newUser.getId());
+    }
+
+    friend ostream& operator << (ostream& os, const User& u) {
       os << u.serialize();
 
       return os;
     }
 
-    virtual int getId () {
+    virtual int getId () const {
       return id;
     }
 
+    void setId (const int& newId) {
+      id = newId;
+    }
+
+    void setFirstName (const string& v) {
+      firstName = v;
+    }
+
     // Used when asking for values in CLI
-    virtual vector<string> getProperties () {
+    virtual vector<string> getProperties () const {
       return properties;
     }
 };
@@ -48,7 +72,7 @@ class UserTable : public DBTable {
   public:
     UserTable(string name): DBTable(name) {};
 
-    vector<User> selectAll () {
+    vector<User> selectAll () const {
       return users;
     }
 
@@ -56,7 +80,7 @@ class UserTable : public DBTable {
       users.push_back(user);
     }
 
-    void updateOne (User newUser) {
+    void updateOne (const User& newUser) {
       for (size_t i = 0; i < users.size(); i++) {
         auto crtUser = users[i];
         users[i] = crtUser.getId() == newUser.getId() ? newUser : crtUser;
@@ -71,7 +95,7 @@ class UserTable : public DBTable {
       auto it = remove_if(
         users.begin(),
         users.end(),
-        [&, userId](User u) {
+        [&, userId](const User& u) {
           return u.getId() == userId;
         }
       );

@@ -20,9 +20,14 @@ class UserController {
     }
 
     void getAll () {
-      auto users = userService.getAll(true);
+      try { 
+        auto users = userService.getAll(true);
+        
+        *this << users;
+      } catch (char const* e) {
+        cout << e << '\n';
+      }
 
-      *this << users;
     }
 
     User getById (int userId) {

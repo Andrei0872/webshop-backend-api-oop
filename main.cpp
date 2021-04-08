@@ -53,8 +53,8 @@ int main () {
 
   userController.deleteUser(1);
   userController.deleteUser(3);
-  userController.deleteUser(4);
-  userController.deleteUser(2);
-  userController.deleteUser(100);
+  // userController.deleteUser(4);
+  // userController.deleteUser(2);
+  // userController.deleteUser(100);
   userController.getAll();
 }
