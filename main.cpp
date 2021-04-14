@@ -1,14 +1,16 @@
 #include <iostream>
 
+#include "./dependencies/http/httplib.h"
+#include "./dependencies/json/single_include/nlohmann/json.hpp"
+
 #include "./utils/types.h"
 #include "./components/product/product.entity.h"
 #include "./db/drivers/memory.driver.h"
 
 #include "./components/user/user.controller.h"
 
-// #include "./cli/cli.h"
-
 using namespace std;
+using json = nlohmann::json;
 
 int main () {
   MemoryDriver* memoryDriver = new MemoryDriver();
@@ -57,6 +59,24 @@ int main () {
   // userController.deleteUser(2);
   // userController.deleteUser(100);
   userController.getAll();
+
+  auto j3 = json::parse(R"({"happy": true, "pi": 3.141})");
+  cout << j3.at("happy") << '\n';
+
+  httplib::Server svr;
+
+  svr.Get("/hi", [](const httplib::Request &req, httplib::Response &res) {
+    cout << req.body;
+    res.set_content("Hello World!", "text/plain");
+  });
+
+  svr.Post("/user", [](const httplib::Request &req, httplib::Response &res) {
+    cout << req.body;
+    auto parsed = json::parse(req.body);
+    res.set_content(req.body + " " + to_string(parsed.at("key1")), "text/plain");
+  });
+
+  svr.listen("0.0.0.0", 8080);
 
   delete memoryDriver;
 }
