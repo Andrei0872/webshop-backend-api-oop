@@ -1,0 +1,6 @@
+[submodule "dependencies/http"]
+	path = dependencies/http
+	url = https://github.com/yhirose/cpp-httplib.git
+[submodule "dependencies/json"]
+	path = dependencies/json
+	url = git@github.com:nlohmann/json.git
