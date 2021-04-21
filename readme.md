@@ -1,10 +1,23 @@
 # backend-api-oop
 
+## TODOS
+
+* [X] CRUD product
+
+* order
+  * [ ] CRUD order
+  * [ ] an order must have a user, and the user might have at least one product(the products in the order must be unique)
+  * [ ] might have to extend the `Product` class so that it also supports a `quantity` property
+
+* API
+  * [ ] have an api that yields the app's state
+
+* [ ] add `Logger` class
+
 ## Project's Architecture
 
-## Project's state
-
 // TODO:
+
 ## Requirements
 
 * make sure you can run `Makefile` commands

@@ -2,3 +2,5 @@
 main
 
 valgrind.txt
+
+.vscode/settings.json
