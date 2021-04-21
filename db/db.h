@@ -15,7 +15,7 @@ class DBTable {
 
   public:
     DBTable(string name = ""): name(name) {
-      cout << "TABLE INIT \n";
+      cout << "TABLE INIT: " << name << '\n';
     };
 
     void hello () {
