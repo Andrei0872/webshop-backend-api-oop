@@ -10,6 +10,7 @@
 
 #include "./components/user/user.controller.h"
 #include "./components/product/product.controller.h"
+#include "./components/order/order.controller.h"
 
 
 using namespace std;
@@ -104,7 +105,23 @@ int main () {
     productController.getAll();
   };
 
-  tempProductStuff();
+  auto tempOrderStuff = []() {
+    // Req.body type: { userId, productId, quantity }
+    //  Check if `userId` & `productId` exist
+    //  Check if the `product` exists already
+
+    //  Add the product to the list
+    //  Remove the product from the list
+    //  Update product's quantity
+    //  Show all the products from the order that belong to a user
+
+    ProductController productController;
+    UserController userController;
+
+    OrderController orderController(productController.getProductService(), userController.getUserService());
+  };
+
+  tempOrderStuff();
 
   // auto j3 = json::parse(R"({"happy": true, "pi": 3.141})");
   // cout << j3.at("happy") << '\n';
