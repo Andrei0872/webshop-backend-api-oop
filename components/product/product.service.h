@@ -24,6 +24,8 @@ class ProductService {
       cout << "PRODUCT SERVICE INIT\n";
     };
 
+    ProductService (const ProductService& p) {}
+
     template <
       typename Serialize,
       typename T = enable_if<is_same<Serialize, bool>{}>

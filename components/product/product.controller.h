@@ -66,4 +66,8 @@ class ProductController {
 
       cout << message << '\n';
     }
+
+    ProductService getProductService () const {
+      return productService;
+    }
 };
