@@ -67,4 +67,8 @@ class UserController {
 
       cout << message << '\n';
     }
+
+    UserService getUserService () const {
+      return userService;
+    }
 };

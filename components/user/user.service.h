@@ -27,6 +27,8 @@ class UserService {
       cout << "USER SERVICE INIT\n";
     };
 
+    UserService (const UserService& u) { }
+
     template <
       typename Serialize,
       typename T = enable_if<is_same<Serialize, bool>{}>
