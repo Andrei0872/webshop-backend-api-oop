@@ -22,7 +22,7 @@ class UserController {
     void getAll () {
       try { 
         auto users = userService.getAll(true);
-        
+
         *this << users;
       } catch (char const* e) {
         cout << e << '\n';
@@ -68,7 +68,7 @@ class UserController {
       cout << message << '\n';
     }
 
-    UserService getUserService () const {
+    UserService& getUserService () {
       return userService;
     }
 };
