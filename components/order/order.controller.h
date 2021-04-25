@@ -5,5 +5,17 @@ class OrderController {
     OrderService orderService;
   
   public:
-    OrderController(const ProductService& ps, const UserService& us): orderService(ps, us) {};
+    OrderController(ProductService& ps, UserService& us): orderService(ps, us) {};
+
+    void insertOrder (nlohmann::json body) {
+      // TODO: try catch
+      try {
+        orderService.insertOrder(body);
+
+        // return ""
+      } catch (string err) {
+        // return "[ERROR]: " + err;
+        cout << err << '\n';
+      }
+    }
 };

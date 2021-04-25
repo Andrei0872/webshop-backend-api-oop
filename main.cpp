@@ -1,7 +1,7 @@
 #include <iostream>
 
 // #include "./dependencies/http/httplib.h"
-// #include "./dependencies/json/single_include/nlohmann/json.hpp"
+#include "./dependencies/json/single_include/nlohmann/json.hpp"
 
 #include "./utils/types.h"
 
@@ -14,7 +14,7 @@
 
 
 using namespace std;
-// using json = nlohmann::json;
+using json = nlohmann::json;
 
 int main () {
   MemoryDriver* memoryDriver = new MemoryDriver();
@@ -107,7 +107,6 @@ int main () {
 
   auto tempOrderStuff = []() {
     // Req.body type: { userId, productId, quantity }
-    //  Check if `userId` & `productId` exist
     //  Check if the `product` exists already
 
     //  Add the product to the list
@@ -118,10 +117,28 @@ int main () {
     ProductController productController;
     UserController userController;
 
+    CliInput rawUser;
+    rawUser.insert({"firstName", "Andrei"});
+    rawUser.insert({"lastName", "Gatej"});
+    rawUser.insert({"country", "RO"});
+    userController.insertUser(rawUser);
+
+    CliInput rawProduct;
+    rawProduct.insert({"name", "product_1"});
+    rawProduct.insert({"price", "120"});
+    productController.insertProduct(rawProduct);
+
     OrderController orderController(productController.getProductService(), userController.getUserService());
+
+    auto body = json::parse(R"({"userId":1,"productsInfo":[{"productId":1,"quantity":2}]})");
+    // cout << body.at("productInfo")[0].at("productId");
+    orderController.insertOrder(body);
   };
 
+  // tempUserStuff();
+  // tempProductStuff();
   tempOrderStuff();
+
 
   // auto j3 = json::parse(R"({"happy": true, "pi": 3.141})");
   // cout << j3.at("happy") << '\n';
