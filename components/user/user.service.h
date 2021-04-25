@@ -60,9 +60,16 @@ class UserService {
     User getById (int userId) {
       auto users = userRepo.selectAll();
 
-      return *find_if(
+      auto it = find_if(
           users.begin(), users.end(),
           [&userId](User &u) { return u.getId() == userId; });
+
+      if (it == users.end()) {
+        // TODO: maybe custom error
+        throw "The user with id: " + to_string(userId) + " does not exist";
+      }
+
+      return *it;
     }
 
     // TODO: maybe return User
