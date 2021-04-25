@@ -57,9 +57,15 @@ class ProductService {
     Product getById (int productId) {
       auto products = productRepo.selectAll();
 
-      return *find_if(
+      auto it = find_if(
           products.begin(), products.end(),
           [&productId](Product &p) { return p.getId() == productId; });
+
+      if (it == products.end()) {
+        throw "The product with id: " + to_string(productId) + "does not exist";
+      }
+
+      return *it;
     }
 
     bool insertProduct (CliInput rawProduct) {
