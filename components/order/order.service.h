@@ -47,7 +47,14 @@ class OrderService {
 
   public:
     OrderService(ProductService &ps, UserService &us):
-      productService(ps), userService(us), orderRepo() {};
+      productService(ps), userService(us), orderRepo() {
+        auto& tempOrderRepo = orderRepo;
+        Subscriber sub([&](int deletedProductId) {
+          tempOrderRepo.deleteProductFromAllOrders(to_string(deletedProductId));
+        });
+        
+        ps.productDeleteSubject.subscribe(sub);
+      };
 
     void insertOrder (nlohmann::json rawBody) {
       string errMessage = "";

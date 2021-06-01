@@ -8,6 +8,7 @@ class ProductService {
   private:
     ProductRepository productRepo;
     int crtProductId = 0;
+    Subject productDeleteSubject;
 
     Product createProduct (CliInput rawProduct, int id = -1) {
       Product newProduct(
@@ -23,6 +24,8 @@ class ProductService {
     ProductService() : productRepo() {
       cout << "PRODUCT SERVICE INIT\n";
     };
+
+    friend class OrderService;
 
     ProductService (const ProductService& p) {}
 
@@ -94,6 +97,12 @@ class ProductService {
     }
 
     bool deleteProduct (int productId) {
-      return productRepo.deleteProduct(productId);
+      bool ok = productRepo.deleteProduct(productId);
+
+      if (ok) {
+        productDeleteSubject.next(productId);
+      }
+
+      return ok;
     }
 };

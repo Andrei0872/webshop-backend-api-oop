@@ -33,19 +33,31 @@ class Order : public Entity {
 
     friend ostream& operator<<(ostream& os, Order& o);
 
-  virtual int getId () const {
-    return id;
-  }
+    vector<ProductInfo>& getProductsInfo () {
+      return productsInfo;
+    }
 
-  virtual vector<string> getProperties () const {
-    return properties;
-  }
+    virtual int getId () const {
+      return id;
+    }
+
+    virtual vector<string> getProperties () const {
+      return properties;
+    }
 };
 
 ostream& operator<< (ostream& os, Order& o) {
   os << "Order ID: " << o.id << '\n';
   os << "User ID: " << o.userId << '\n';
-  os << "Products :" << '\n';
+  os << "Products :";
+
+  if (!o.productsInfo.size()) {
+    cout << "There are no products in this order. \n";
+
+    return os;
+  }
+
+  cout << '\n';
 
   for_each(o.productsInfo.begin(), o.productsInfo.end(), [](ProductInfo& pI) {
     cout << "\tProduct ID: " << pI.productId << ", " << "Quantity: " << pI.quantity << '\n';
@@ -90,5 +102,22 @@ class OrderTable : public DBTable {
       }
 
       orders.erase(it, orders.end());
+    }
+
+    void deleteProductFromAllOrders (string productId) {
+      // Deleting the product with `productId`
+      // from all the orders.
+      for_each(orders.begin(), orders.end(), [&](Order& o) {
+        auto& productsInfo = o.getProductsInfo();
+        auto it = find_if(productsInfo.begin(), productsInfo.end(), [&productId](ProductInfo& pI) {
+          return pI.productId == productId;
+        });
+
+        if (it == productsInfo.end()) {
+          return;
+        }
+
+        productsInfo.erase(it);
+      });
     }
 };

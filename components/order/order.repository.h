@@ -65,4 +65,8 @@ class OrderRepository : public Repository {
         return false;
       }
     }
+
+    void deleteProductFromAllOrders (string productId) {
+      orderTable->deleteProductFromAllOrders(productId);
+    }
 };

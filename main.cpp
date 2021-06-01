@@ -3,6 +3,8 @@
 // #include "./dependencies/http/httplib.h"
 #include "./dependencies/json/single_include/nlohmann/json.hpp"
 
+#include "./utils/observables.h"
+
 #include "./utils/types.h"
 
 #include "./db/db.h"
@@ -127,22 +129,30 @@ int main () {
     rawProduct.insert({"name", "product_1"});
     rawProduct.insert({"price", "120"});
     productController.insertProduct(rawProduct);
+    rawProduct.clear();
+    rawProduct.insert({"name", "product2"});
+    rawProduct.insert({"price", "60"});
+    productController.insertProduct(rawProduct);
 
     OrderController orderController(productController.getProductService(), userController.getUserService());
 
     // CREATE
-    auto body = json::parse(R"({"userId":1,"productsInfo":[{"productId":1,"quantity":2}]})");
+    auto body = json::parse(R"({"userId":1,"productsInfo":[{"productId":1,"quantity":2},{"productId":2,"quantity":10}]})");
     orderController.insertOrder(body);
 
     // READ multiple orders
-    orderController.readOrders();
+    // orderController.readOrders();
     // READ an order
-    orderController.readOrder(1);
-    orderController.readOrder(2);
+    // orderController.readOrder(1);
+    // orderController.readOrder(2);
     
     // Delete order
-    orderController.deleteOrder(2);
-    orderController.deleteOrder(1);
+    // orderController.deleteOrder(2);
+    // orderController.deleteOrder(1);
+    // orderController.readOrders();
+
+    orderController.readOrders();
+    productController.deleteProduct(1);
     orderController.readOrders();
   };
 
