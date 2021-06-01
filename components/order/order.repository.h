@@ -17,7 +17,7 @@ class OrderRepository : public Repository {
       for (auto pInfo : rawProductsInfo) {
         ProductInfo productInfo;
         productInfo.productId = to_string(pInfo.at("productId"));
-        productInfo.quantity = stoi(to_string(pInfo.at("quantity")));
+        productInfo.quantity = to_string(pInfo.at("quantity"));
 
         res.push_back(productInfo);
       }
@@ -40,7 +40,7 @@ class OrderRepository : public Repository {
 
     void insertOrder (string userId, nlohmann::json rawProductsInfo) {
       Order o(
-        crtOrderId++,
+        ++crtOrderId,
         userId,
         convertRawProductInfo(rawProductsInfo)
       );
@@ -48,5 +48,9 @@ class OrderRepository : public Repository {
       orderTable->insertOne(o);
 
       // cout << orderTable->selectAll().size();
+    }
+
+    vector<Order> selectAll () {
+      return orderTable->selectAll();
     }
 };

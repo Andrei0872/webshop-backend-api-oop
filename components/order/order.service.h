@@ -4,6 +4,18 @@
 
 using namespace std;
 
+class OrderNotFound : public exception {
+private:
+  int wantedId;
+
+public:
+  OrderNotFound(const int &id) : exception(), wantedId(id){};
+
+  string getMessage() {
+    return string("The order with the id " + to_string(wantedId) + " could not be found.");
+  }
+};
+
 class OrderService {
   private:
     ProductService& productService;
@@ -45,5 +57,23 @@ class OrderService {
       }
 
       orderRepo.insertOrder(to_string(rawBody.at("userId")), rawBody.at("productsInfo"));
+    }
+
+    vector<Order> getAll () {
+      return orderRepo.selectAll();
+    }
+
+    Order getOne (int orderId) {
+      auto orders = getAll();
+      
+      auto res = find_if(orders.begin(), orders.end(), [&orderId](const Order& o) {
+        return o.getId() == orderId;
+      });
+
+      if (res == orders.end()) {
+        throw OrderNotFound(orderId);
+      }
+
+      return *res;
     }
 };

@@ -130,9 +130,16 @@ int main () {
 
     OrderController orderController(productController.getProductService(), userController.getUserService());
 
+    // CREATE
     auto body = json::parse(R"({"userId":1,"productsInfo":[{"productId":1,"quantity":2}]})");
-    // cout << body.at("productInfo")[0].at("productId");
     orderController.insertOrder(body);
+
+    // READ multiple orders
+    orderController.readOrders();
+    // READ an order
+    orderController.readOrder(1);
+    orderController.readOrder(2);
+    
   };
 
   // tempUserStuff();
