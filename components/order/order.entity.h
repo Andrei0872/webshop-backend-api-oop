@@ -31,9 +31,7 @@ class Order : public Entity {
     Order (int orderId, string& userId, vector<ProductInfo> productsInfo):
       id(orderId), userId(userId), productsInfo(productsInfo) { };
 
-  // TODO: copy constructor
-
-  // TODO: =, << operators
+    friend ostream& operator<<(ostream& os, Order& o);
 
   virtual int getId () const {
     return id;
@@ -43,6 +41,18 @@ class Order : public Entity {
     return properties;
   }
 };
+
+ostream& operator<< (ostream& os, Order& o) {
+  os << "Order ID: " << o.id << '\n';
+  os << "User ID: " << o.userId << '\n';
+  os << "Products :" << '\n';
+
+  for_each(o.productsInfo.begin(), o.productsInfo.end(), [](ProductInfo& pI) {
+    cout << "\tProduct ID: " << pI.productId << ", " << "Quantity: " << pI.quantity << '\n';
+  });
+
+  return os;
+}
 
 class OrderTable : public DBTable {
   private:
