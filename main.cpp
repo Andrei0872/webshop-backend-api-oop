@@ -140,6 +140,10 @@ int main () {
     orderController.readOrder(1);
     orderController.readOrder(2);
     
+    // Delete order
+    orderController.deleteOrder(2);
+    orderController.deleteOrder(1);
+    orderController.readOrders();
   };
 
   // tempUserStuff();

@@ -68,4 +68,27 @@ class OrderTable : public DBTable {
     void insertOne (Order& order) {
       orders.push_back(order);
     }
+
+    void deleteOne (int orderId) {
+      if (!orders.size()) {
+        throw string("There are no more orders - nothing to delete");
+      }
+      
+      auto it = remove_if(
+        orders.begin(),
+        orders.end(),
+        [&, orderId](const Order& o) {
+          return o.getId() == orderId;
+        }
+      );
+
+      if (it == orders.end()) {
+        string errorMsg = "The order with id=";
+        errorMsg += to_string(orderId) + "does not exist!";
+
+        throw errorMsg;
+      }
+
+      orders.erase(it, orders.end());
+    }
 };

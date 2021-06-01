@@ -76,4 +76,8 @@ class OrderService {
 
       return *res;
     }
+
+    bool deleteOrder (int orderId) {
+      return orderRepo.deleteOne(orderId);
+    }
 };

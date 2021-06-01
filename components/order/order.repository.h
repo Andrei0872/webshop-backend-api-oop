@@ -53,4 +53,16 @@ class OrderRepository : public Repository {
     vector<Order> selectAll () {
       return orderTable->selectAll();
     }
+
+    bool deleteOne (int orderId) {
+      try {
+        orderTable->deleteOne(orderId);
+        
+        return true;
+      } catch (string err) {
+        cout << err << '\n';
+        
+        return false;
+      }
+    }
 };

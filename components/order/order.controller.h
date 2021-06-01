@@ -21,6 +21,12 @@ class OrderController {
 
     void readOrders () {
       auto orders = orderService.getAll();
+      
+      if (!orders.size()) {
+        cout << "There are no orders - nothing to print. \n";
+        return;
+      }
+      
       for_each(orders.begin(), orders.end(), [](Order o) {
         cout << o << "\n\n";
       });
@@ -32,6 +38,14 @@ class OrderController {
         cout << o << '\n';
       } catch (OrderNotFound err) {
         cout << err.getMessage() << '\n';
+      }
+    }
+
+    void deleteOrder (int orderId) {
+      bool ok = orderService.deleteOrder(orderId);
+
+      if (ok) {
+        cout << "Successfully deleted the order with id " << orderId << '\n';
       }
     }
 };
