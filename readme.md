@@ -8,22 +8,40 @@
 
 ## Getting started
 
-1. add your env variables
+### Add the env variables
+
+#### Linux
 
 ```bash
 cp .env.example .env
 ```
 
-2. build & run
+**Note**: the values must be strings, e.g: `export DB_USER="andrei"`.
+
+#### Windows
 
 ```bash
-env $(cat .env) make
+cp .env.example .env.bat && sed -i s/export/set/g .env.bat
+```
+
+### Build and run
+
+#### Linux
+
+```bash
+source .env && make
 ```
 
 Additionally, if you want to inspect `valgrind`'s outputs, you can use:
 
 ```bash
 env $(cat .env) valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./main &> valgrind.txt
+```
+
+#### Windows
+
+```bash
+call .env.bat && make
 ```
 
 ---
