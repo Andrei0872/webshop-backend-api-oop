@@ -14,7 +14,6 @@
 #include "./components/product/product.controller.h"
 #include "./components/order/order.controller.h"
 
-
 using namespace std;
 using json = nlohmann::json;
 
@@ -28,156 +27,111 @@ int main () {
   // which does not require any async actions
   Database::getInstance().connect();
 
-  auto tempUserStuff = []() {
-    UserController userController;
+  ProductController productController;
+  UserController userController;
+  OrderController orderController(productController.getProductService(), userController.getUserService());
 
-    CliInput rawUser;
-    rawUser.insert({"firstName", "Andrei"});
-    rawUser.insert({"lastName", "Gatej"});
-    rawUser.insert({"country", "RO"});
-    userController.insertUser(rawUser);
+  // User CRUD
+  cout << "\n-------------USER------------- \n";
+  // Create
+  cout << "\n\t CREATE: \n";
+  CliInput rawUser;
+  rawUser.insert({"firstName", "Andrei"});
+  rawUser.insert({"lastName", "Gatej"});
+  rawUser.insert({"country", "RO"});
+  userController.insertUser(rawUser);
+  rawUser.clear();
+  rawUser.insert({"firstName", "Jane"});
+  rawUser.insert({"lastName", "Doe"});
+  rawUser.insert({"country", "DE"});
+  userController.insertUser(rawUser);
+  // Read
+  cout << "\n\t READ: \n";
+  userController.getAll();
+  cout << "User with ID = 1: " << userController.getById(1);
+  // Update
+  cout << "\n\t UPDATE: \n";
+  rawUser.clear();
+  rawUser.insert({ "firstName", "ANDREI" });
+  userController.updateUser(1, rawUser);
+  cout << "User with ID = 1: " << userController.getById(1);
+  // Delete
+  cout << "\n\t DELETE: \n";
+  userController.deleteUser(1);
+  cout << "\nUser list after deleting the user with id 1: \n";
+  userController.getAll();
 
-    rawUser.clear();
+  // Product CRUD
+  cout << "\n\n-------------PRODUCT------------- \n";
+  // Create
+  cout << "\n\t CREATE: \n";
+  CliInput rawProduct;
+  rawProduct.insert({"name", "product_1"});
+  rawProduct.insert({"price", "120"});
+  productController.insertProduct(rawProduct);
+  rawProduct.clear();
+  rawProduct.insert({"name", "product2"});
+  rawProduct.insert({"price", "60"});
+  productController.insertProduct(rawProduct);
+  rawProduct.clear();
+  rawProduct.insert({"name", "product3"});
+  rawProduct.insert({"price", "15"});
+  productController.insertProduct(rawProduct);
+  rawProduct.clear();
+  rawProduct.insert({"name", "product4"});
+  rawProduct.insert({"price", "30"});
+  productController.insertProduct(rawProduct);
+  rawProduct.clear();
+  rawProduct.insert({"name", "product5"});
+  rawProduct.insert({"price", "50"});
+  productController.insertProduct(rawProduct);
+  // Read
+  cout << "\n\t READ: \n";
+  productController.getAll();
+  cout << "Product with ID = 1: " << productController.getById(1) << '\n';
+  cout << "Product with ID = 2: " << productController.getById(2);
+  // Update
+  cout << "\n\t UPDATE: \n";
+  rawProduct.clear();
+  rawProduct.insert({ "name", "PRODUCT_1" });
+  productController.updateProduct(1, rawProduct);
+  cout << "Product with ID = 1 AFTER update: " << productController.getById(1) << '\n';
+  // Delete
+  cout << "\n\t DELETE: \n";
+  productController.deleteProduct(1);
+  productController.deleteProduct(2);
+  cout << "\nProduct list after deleting the products with id 1 and 2: \n";
+  productController.getAll();
 
-    rawUser.insert({"firstName", "John"});
-    rawUser.insert({"lastName", "Doe"});
-    rawUser.insert({"country", "GE"});
-    userController.insertUser(rawUser);
-
-    rawUser.clear();
-
-    rawUser.insert({"firstName", "Jane"});
-    rawUser.insert({"lastName", "Doe"});
-    rawUser.insert({"country", "BG"});
-    userController.insertUser(rawUser);
-
-    // userController.getAll();
-
-    // auto u = userController.getById(1);
-    // cout << u;
-
-    // rawUser.clear();
-    // rawUser.insert({ "firstName", "ANDREI" });
-    // userController.updateUser(1, rawUser);
-
-    userController.deleteUser(1);
-    userController.deleteUser(3);
-    // userController.deleteUser(4);
-    // userController.deleteUser(2);
-    // userController.deleteUser(100);
-    userController.getAll();
-  };
-
-  auto tempProductStuff = []() {
-    ProductController productController;
-
-    CliInput rawProduct;
-    rawProduct.insert({"name", "product_1"});
-    rawProduct.insert({"price", "120"});
-    productController.insertProduct(rawProduct);
-  
-    rawProduct.clear();
-
-    rawProduct.insert({"name", "product_2"});
-    rawProduct.insert({"price", "200"});
-    productController.insertProduct(rawProduct);
-
-    rawProduct.clear();
-
-    rawProduct.insert({"name", "product_3"});
-    rawProduct.insert({"price", "119"});
-    productController.insertProduct(rawProduct);
-
-    // productController.getAll();
-
-    // auto p = productController.getById(1);
-    // cout << p;
-
-    // rawProduct.clear();
-    // rawProduct.insert({ "price", "99999" });
-    // productController.updateProduct(1, rawProduct);
-
-    // productController.getAll();
-
-    productController.deleteProduct(1);
-    productController.deleteProduct(3);
-    // productController.deleteProduct(4);
-    // productController.deleteProduct(2);
-    // productController.deleteProduct(100);
-    productController.getAll();
-  };
-
-  auto tempOrderStuff = []() {
-    // Req.body type: { userId, productId, quantity }
-    //  Check if the `product` exists already
-
-    //  Add the product to the list
-    //  Remove the product from the list
-    //  Update product's quantity
-    //  Show all the products from the order that belong to a user
-
-    ProductController productController;
-    UserController userController;
-
-    CliInput rawUser;
-    rawUser.insert({"firstName", "Andrei"});
-    rawUser.insert({"lastName", "Gatej"});
-    rawUser.insert({"country", "RO"});
-    userController.insertUser(rawUser);
-
-    CliInput rawProduct;
-    rawProduct.insert({"name", "product_1"});
-    rawProduct.insert({"price", "120"});
-    productController.insertProduct(rawProduct);
-    rawProduct.clear();
-    rawProduct.insert({"name", "product2"});
-    rawProduct.insert({"price", "60"});
-    productController.insertProduct(rawProduct);
-
-    OrderController orderController(productController.getProductService(), userController.getUserService());
-
-    // CREATE
-    auto body = json::parse(R"({"userId":1,"productsInfo":[{"productId":1,"quantity":2},{"productId":2,"quantity":10}]})");
-    orderController.insertOrder(body);
-
-    // READ multiple orders
-    // orderController.readOrders();
-    // READ an order
-    // orderController.readOrder(1);
-    // orderController.readOrder(2);
-    
-    // Delete order
-    // orderController.deleteOrder(2);
-    // orderController.deleteOrder(1);
-    // orderController.readOrders();
-
-    orderController.readOrders();
-    productController.deleteProduct(1);
-    orderController.readOrders();
-  };
-
-  // tempUserStuff();
-  // tempProductStuff();
-  tempOrderStuff();
-
-
-  // auto j3 = json::parse(R"({"happy": true, "pi": 3.141})");
-  // cout << j3.at("happy") << '\n';
-
-  // httplib::Server svr;
-
-  // svr.Get("/hi", [](const httplib::Request &req, httplib::Response &res) {
-  //   cout << req.body;
-  //   res.set_content("Hello World!", "text/plain");
-  // });
-
-  // svr.Post("/user", [](const httplib::Request &req, httplib::Response &res) {
-  //   cout << req.body;
-  //   auto parsed = json::parse(req.body);
-  //   res.set_content(req.body + " " + to_string(parsed.at("key1")), "text/plain");
-  // });
-
-  // svr.listen("127.0.0.1", 5000);
+  // Order CRUD
+  cout << "\n\n-------------ORDER------------- \n";
+  // Create
+  cout << "\n\t CREATE: \n";
+  auto body = json::parse(R"({"userId":2,"productsInfo":[{"productId":3,"quantity":2},{"productId":4,"quantity":10}]})");
+  orderController.insertOrder(body);
+  body = json::parse(R"({"userId":2,"productsInfo":[{"productId":3,"quantity":2},{"productId":4,"quantity":10}, {"productId":5,"quantity":20}]})");
+  orderController.insertOrder(body);
+  // Read
+  cout << "\n\t READ: \n";
+  cout << "Orders list: \n";
+  orderController.readOrders();
+  cout << "The order with ID = 1: \n";
+  orderController.readOrder(1);
+  cout << "The order with ID = 2: ";
+  orderController.readOrder(2);
+  // Delete
+  cout << "\n\t DELETE: \n";
+  // Trying to delete an unexisting order
+  orderController.deleteOrder(3);
+  orderController.deleteOrder(1);
+  cout << "Orders list after deleting the order with ID = 1: \n";
+  orderController.readOrders();
+  // The `Observer` pattern applied
+  // orderController.readOrders();
+  cout << "\n\t DELETING the product with ID = 4 - it will dissapear from the existing orders too: \n";
+  productController.deleteProduct(4);
+  cout << "Orders list after deleting the PRODUCT with ID = 4: \n";
+  orderController.readOrders();
 
   delete memoryDriver;
 }
